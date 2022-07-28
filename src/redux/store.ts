@@ -5,21 +5,9 @@ import {
   createStore,
   Store,
 } from 'redux';
-import { Persistor } from 'redux-persist';
-import persistReducer from 'redux-persist/es/persistReducer';
-import persistStore from 'redux-persist/es/persistStore';
-import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
-import storage from 'redux-persist/lib/storage';
+
 import thunk from 'redux-thunk';
 import { movieDetailsReducer, moviesReducer } from './movies/reducer';
-
-const middleware = [thunk];
-
-const persistConfig = {
-  key: 'root',
-  storage,
-  stateReconciler: hardSet,
-};
 
 export const appReducer = combineReducers({
   movies: moviesReducer,
@@ -37,13 +25,7 @@ export const rootReducer = (
 
 export const configureStore = (): {
   store: Store<RootState>;
-  persistor: Persistor;
 } => {
-  const persistedReducer = persistReducer<RootState>(
-    persistConfig,
-    rootReducer,
-  );
-  const store = createStore(persistedReducer, applyMiddleware(thunk));
-  const persistor = persistStore(store);
-  return { store, persistor };
+  const store = createStore(rootReducer, applyMiddleware(thunk));
+  return { store };
 };

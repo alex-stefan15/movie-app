@@ -1,3 +1,9 @@
+import { DEFAULT_ECDH_CURVE } from 'tls';
+import {
+  DeleteMovieFail,
+  DeleteMovieLoading,
+  DeleteMovieSuccess,
+} from './delete-movie';
 import {
   GetMovieListLoading,
   GetMovieListFail,
@@ -15,4 +21,7 @@ export type MoviesDispatchTypes =
   | GetMovieListSuccess
   | GetMovieDetailsFail
   | GetMovieDetailsLoading
-  | GetMovieDetailsSuccess;
+  | GetMovieDetailsSuccess
+  | DeleteMovieFail
+  | DeleteMovieLoading
+  | DeleteMovieSuccess;

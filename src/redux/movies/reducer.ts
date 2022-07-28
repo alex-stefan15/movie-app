@@ -1,4 +1,9 @@
 import {
+  DELETE_MOVIE_FAIL,
+  DELETE_MOVIE_LOADING,
+  DELETE_MOVIE_SUCCESS,
+} from './types/delete-movie';
+import {
   GET_MOVIE_LIST_FAIL,
   GET_MOVIE_LIST_LOADING,
   GET_MOVIE_LIST_SUCCESS,
@@ -20,14 +25,15 @@ export const detailsInitialState: DetailsState = {
 };
 
 export const moviesReducer = (
-  state: MoviesState,
+  state: MoviesState = initialState,
   action: MoviesDispatchTypes,
 ): MoviesState => {
   switch (action.type) {
+    case DELETE_MOVIE_LOADING:
     case GET_MOVIE_LIST_LOADING:
       return {
+        ...state,
         loading: true,
-        movies: [],
       };
     case GET_MOVIE_LIST_FAIL:
       return {
@@ -40,10 +46,15 @@ export const moviesReducer = (
         loading: false,
         movies: action.payload,
       };
-    default: {
+    case DELETE_MOVIE_FAIL:
+    case DELETE_MOVIE_SUCCESS:
       return {
         ...state,
+        loading: false,
       };
+
+    default: {
+      return state;
     }
   }
 };
@@ -66,13 +77,11 @@ export const movieDetailsReducer = (
       };
     case GET_MOVIE_DETAILS_SUCCESS:
       return {
-        movie: action.payload,
         loading: false,
+        movie: action.payload,
       };
     default: {
-      return {
-        ...state,
-      };
+      return state;
     }
   }
 };

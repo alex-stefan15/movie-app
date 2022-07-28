@@ -8,7 +8,7 @@ import { getMovies, searchMovies } from '../../redux/movies/actions';
 import { Movie } from '../../redux/movies/types/movie-general';
 
 export const MovieList = () => {
-  const { currentMovie } = useAppStateSelector(
+  const { movies, loading, error } = useAppStateSelector(
     (state: RootState) => state.movies,
   );
   const [query, setQuery] = useState(
@@ -16,13 +16,9 @@ export const MovieList = () => {
   );
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  const dispatch = useAppDispatch();
-  const { movies, loading, error } = currentMovie;
-
   useEffect(() => {
     sessionStorage.setItem('queryInSessionStorage', query);
   }, [query]);
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(query);
@@ -37,6 +33,7 @@ export const MovieList = () => {
     setQuery(query);
   };
 
+  const dispatch = useAppDispatch();
   useEffect(() => {
     debouncedQuery !== null && debouncedQuery.length > 2
       ? dispatch(searchMovies(debouncedQuery))
@@ -44,16 +41,15 @@ export const MovieList = () => {
   }, [dispatch, debouncedQuery, debouncedQuery.length]);
 
   const { t } = useTranslation();
-
+  console.log('query', query);
+  console.log('debouncedQuery', debouncedQuery);
   return (
     <>
       <Search query={query} onSearch={searchQueryHandler} />
       {loading ? (
         <Loading />
       ) : error ? (
-        <div className="message">
-          <h4>{error}</h4>
-        </div>
+        <div className="message">{/* <h4>{error}</h4> */}</div>
       ) : movies?.length ? (
         <ul className="movies-container">
           {movies.slice(0, 10).map((movie: Movie) => (
