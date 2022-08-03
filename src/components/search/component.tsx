@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './styles.module.css';
 
 type Props = {
   onSearch: (searchQuery: string) => void;
@@ -15,7 +16,7 @@ export const Search: React.FC<Props> = (props) => {
   };
   const { t } = useTranslation();
   return (
-    <div className="search">
+    <div className={styles.search}>
       <form>
         <input
           value={props.query}

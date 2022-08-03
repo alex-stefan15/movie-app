@@ -14,5 +14,5 @@ export type DeleteMovieFail = {
 
 export type DeleteMovieSuccess = {
   type: typeof DELETE_MOVIE_SUCCESS;
-  payload: Movie;
+  payload: number;
 };

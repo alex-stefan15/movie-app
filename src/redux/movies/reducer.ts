@@ -9,7 +9,8 @@ import {
   GET_MOVIE_LIST_SUCCESS,
 } from './types/get-movie-list';
 import {
-  GET_MOVIE_DETAILS_LOADING,
+  GET_MOVIE_DETAILS,
+  GET_MOVIE_DETAILS_FAIL,
   GET_MOVIE_DETAILS_SUCCESS,
 } from './types/movie-details';
 import { MoviesDispatchTypes } from './types/movie-dispatch-types';
@@ -37,7 +38,7 @@ export const moviesReducer = (
       };
     case GET_MOVIE_LIST_FAIL:
       return {
-        ...state,
+        // ...state,
         loading: false,
         error: action.payload,
       };
@@ -47,12 +48,17 @@ export const moviesReducer = (
         movies: action.payload,
       };
     case DELETE_MOVIE_FAIL:
-    case DELETE_MOVIE_SUCCESS:
+      return {
+        // ...state,
+        loading: false,
+      };
+    case DELETE_MOVIE_SUCCESS: {
       return {
         ...state,
         loading: false,
+        movies: state.movies?.filter((movie) => movie.id !== action.payload),
       };
-
+    }
     default: {
       return state;
     }
@@ -64,7 +70,7 @@ export const movieDetailsReducer = (
   action: MoviesDispatchTypes,
 ): DetailsState => {
   switch (action.type) {
-    case GET_MOVIE_DETAILS_LOADING:
+    case GET_MOVIE_DETAILS:
       return {
         ...state,
         loading: true,

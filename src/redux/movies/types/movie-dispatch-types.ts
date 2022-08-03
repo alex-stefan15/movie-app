@@ -11,7 +11,7 @@ import {
 } from './get-movie-list';
 import {
   GetMovieDetailsFail,
-  GetMovieDetailsLoading,
+  GetMovieDetails,
   GetMovieDetailsSuccess,
 } from './movie-details';
 
@@ -20,7 +20,7 @@ export type MoviesDispatchTypes =
   | GetMovieListFail
   | GetMovieListSuccess
   | GetMovieDetailsFail
-  | GetMovieDetailsLoading
+  | GetMovieDetails
   | GetMovieDetailsSuccess
   | DeleteMovieFail
   | DeleteMovieLoading
